@@ -44,76 +44,78 @@ function getUsers(usersCount) {
                     </li>
                   `;
 
-                function length(obj) { // фун-ция нахождения кол-ва пользователей
-                    return Object.keys(obj).length;
+
+                container.innerHTML += content;
+
+            });
+
+            function length(obj) { // фун-ция нахождения кол-ва пользователей
+                return Object.keys(obj).length;
+            }
+
+            let countOfUsers = length(json.results)
+
+
+            let list = json.results; // находим мужчина или женщина
+            let male = 0;
+            let female = 0;
+            for (let i = 0; i < list.length; i++) {
+                if (list[i].gender === "male") { // сравнимаем если одно то +1
+                    male++;
+                } else {
+                    female++;
                 }
+            }
 
-                let countOfUsers = length(json.results)
 
+            whoMore = () => {
+                return male > female ? "Мужчин больше" : "Женщин больше"
+            };
 
-                let list = json.results; // находим мужчина или женщина
-                let male = 0;
-                let female = 0;
-                for (let i = 0; i < list.length; i++) {
-                    if (list[i].gender === "male") { // сравнимаем если одно то +1
-                        male++;
-                    } else {
-                        female++;
-                    }
+            let nation = json.results;
+            let result2 = [];
+            for (let i = 0; i < nation.length; i++) {
+                result2.push(nation[i].nat.toUpperCase()); //заполняем массив национальностями
+            }
+
+            let resultReduce = result2.reduce(function (acc, cur) { // находим совпадения
+                if (!acc.hash[cur]) {
+                    acc.hash[cur] = {[cur]: 1};
+                    acc.map.set(acc.hash[cur], 1);
+                    acc.result.push(acc.hash[cur]);
+                } else {
+                    acc.hash[cur][cur] += 1;
+                    acc.map.set(acc.hash[cur], acc.hash[cur][cur]);
                 }
+                return acc;
+            }, {
+                hash: {},
+                map: new Map(),
+                result: []
+            });
+
+            let resultSort = resultReduce.result.sort(function (a, b) {
+                return resultReduce.map.get(b) - resultReduce.map.get(a);
+            });
 
 
-                whoMore = () => {
-                    return male > female ? "Мужчин больше" : "Женщин больше"
-                };
-
-                let nation = json.results;
-                let result2 = [];
-                for (let i = 0; i < nation.length; i++) {
-                    result2.push(nation[i].nat.toUpperCase()); //заполняем массив национальностями
+            let resultNational = []; // форматируем предыдущий результат фильтрации для удобного вовода информации
+            for (let i in resultSort) {
+                for (key in resultSort[i]) {
+                    resultNational += `<div> ${key + ": " + resultSort[i][key] + ", "} </div>`
                 }
-
-                let resultReduce = result2.reduce(function (acc, cur) { // находим совпадения
-                    if (!acc.hash[cur]) {
-                        acc.hash[cur] = {[cur]: 1};
-                        acc.map.set(acc.hash[cur], 1);
-                        acc.result.push(acc.hash[cur]);
-                    } else {
-                        acc.hash[cur][cur] += 1;
-                        acc.map.set(acc.hash[cur], acc.hash[cur][cur]);
-                    }
-                    return acc;
-                }, {
-                    hash: {},
-                    map: new Map(),
-                    result: []
-                });
-
-                let resultSort = resultReduce.result.sort(function (a, b) {
-                    return resultReduce.map.get(b) - resultReduce.map.get(a);
-                });
-
-
-                let resultNatioanl = []; // форматируем предыдущий результат фильтрации для удобного вовода информации
-                for (let i in resultSort) {
-                    for (key in resultSort[i]) {
-                        resultNatioanl += `<div> ${key + ": " + resultSort[i][key] + ", "} </div>`
-                    }
-                }
-                // выводим данные
-                const info = `
+            }
+            // выводим данные
+            const info = `
                     <div class="info">
                          <h5>INFO</h5>
                         <div>Count: ${countOfUsers}</div>
                         <div>Male: ${male} Female: ${female}</div>
                         <div>${whoMore()}</div>
-                        <div>${resultNatioanl}</div>
+                        <div>${resultNational}</div>
                     </div>
                 `;
-                infoContainer.innerHTML = info;
-                container.innerHTML += content;
-
-            });
+            infoContainer.innerHTML = info;
         })
 };
 
