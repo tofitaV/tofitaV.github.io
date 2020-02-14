@@ -3,6 +3,7 @@ document.getElementById("button").onclick = () => {
 }
 
 const loader = document.getElementById("loader");
+const button = document.getElementById("button");
 
 function getRandomCountOfUsers() {
     return Math.floor(Math.random() * 101) // генерируем от 0 до 1000
@@ -14,6 +15,7 @@ function getUsers(usersCount) {
         .then(response => response.json())
         .then((json) => { // получаем ответ из API в виде JSON
             loader.setAttribute("hidden", "");
+            button.setAttribute("hidden", "");
             let infoContainer = document.getElementById("info");
             const container = document.getElementById('accordion__main');
 
@@ -35,26 +37,20 @@ function getUsers(usersCount) {
                                 <div><b>Phone:</b>${phone}</div>
                                 <div><b>Email:</b>${email}</div>
                                 <div><b>Address:</b>${location.state} ${location.city} ${location.street.name} ${location.street.number}</div>
-                                <div><b>Birthday:</b>${dob.date}</div>
-                                <div><b>Registered:</b>${registered.date}</div>
+                                <div><b>Day of Birthday:</b>${new Date(dob.date).toLocaleDateString()}</div>
+                                <div><b>Registered:</b>${new Date(registered.date).toLocaleDateString()}</div>
                                 <div><b>National:</b>${nat}</div>
                               </div>
                             </div>
                         </div>
-                    </li>
-                  `;
-
-
+                    </li>`;
                 container.innerHTML += content;
-
             });
 
             function length(obj) { // фун-ция нахождения кол-ва пользователей
-                return Object.keys(obj).length;
-            }
+                return Object.keys(obj).length;}
 
             let countOfUsers = length(json.results)
-
 
             let list = json.results; // находим мужчина или женщина
             let male = 0;
@@ -64,9 +60,7 @@ function getUsers(usersCount) {
                     male++;
                 } else {
                     female++;
-                }
-            }
-
+                }}
 
             whoMore = () => {
                 return male > female ? "Мужчин больше" : "Женщин больше"
@@ -102,7 +96,7 @@ function getUsers(usersCount) {
             let resultNational = []; // форматируем предыдущий результат фильтрации для удобного вовода информации
             for (let i in resultSort) {
                 for (key in resultSort[i]) {
-                    resultNational += `<div> ${key + ": " + resultSort[i][key] + ", "} </div>`
+                    resultNational += `<div> ${key + ": " + resultSort[i][key]} </div>`
                 }
             }
             // выводим данные
