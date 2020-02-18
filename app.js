@@ -4,6 +4,7 @@ document.getElementById("button").onclick = () => {
 
 const loader = document.getElementById("loader");
 const button = document.getElementById("button");
+const sortButton = document.getElementById('sortButton');
 
 function getRandomCountOfUsers() {
     return Math.floor(Math.random() * 101) // генерируем от 0 до 1000
@@ -29,17 +30,17 @@ function getUsers(usersCount) {
                     <div class="card">
                             <div id="collapse-${index}" class="collapse show" aria-labelledby="heading-${index}" data-parent="#accordion">
                               <div class="card-body">
-                                <div>
+                                <div class="image">
                                 <img src="${img}" alt="">
                                 </div>
-                                <div><b>Gender:</b> ${gender}</div>
-                                <div><b>Full name:</b> ${name.title} ${name.first} ${name.last} </div>
-                                <div><b>Phone:</b>${phone}</div>
-                                <div><b>Email:</b>${email}</div>
-                                <div><b>Address:</b>${location.state} ${location.city} ${location.street.name} ${location.street.number}</div>
-                                <div><b>Day of Birthday:</b>${new Date(dob.date).toLocaleDateString()}</div>
-                                <div><b>Registered:</b>${new Date(registered.date).toLocaleDateString()}</div>
-                                <div><b>National:</b>${nat}</div>
+                                <div class="gender"><b>Gender:</b> ${gender}</div>
+                                <div class="full__name"><b>Full name:</b> ${name.title} ${name.first} ${name.last} </div>
+                                <div class="phone"><b>Phone:</b>${phone}</div>
+                                <div class="email"><b>Email:</b>${email}</div>
+                                <div class="address"><b>Address:</b>${location.state} ${location.city} ${location.street.name} ${location.street.number}</div>
+                                <div class="dob"><b>Day of Birthday:</b>${new Date(dob.date).toLocaleDateString()}</div>
+                                <div class="registered"><b>Registered:</b>${new Date(registered.date).toLocaleDateString()}</div>
+                                <div class="national"><b>National:</b>${nat}</div>
                               </div>
                             </div>
                         </div>
@@ -48,7 +49,8 @@ function getUsers(usersCount) {
             });
 
             function length(obj) { // фун-ция нахождения кол-ва пользователей
-                return Object.keys(obj).length;}
+                return Object.keys(obj).length;
+            }
 
             let countOfUsers = length(json.results)
 
@@ -60,10 +62,17 @@ function getUsers(usersCount) {
                     male++;
                 } else {
                     female++;
-                }}
+                }
+            }
 
             whoMore = () => {
-                return male > female ? "Мужчин больше" : "Женщин больше"
+                if (male > female) {
+                    return "Мужчин больше"
+                } else if (female > male) {
+                    return "Женщин больше"
+                } else {
+                    return "Женщин и мужчин поровну"
+                }
             };
 
             let nation = json.results;
@@ -112,6 +121,8 @@ function getUsers(usersCount) {
             infoContainer.innerHTML = info;
         })
 };
+
+
 
 
 
