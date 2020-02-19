@@ -33,14 +33,14 @@ function getUsers(usersCount) {
                                 <div class="image">
                                 <img src="${img}" alt="">
                                 </div>
-                                <div class="gender"><b>Gender:</b> ${gender}</div>
-                                <div class="full__name"><b>Full name:</b> ${name.title} ${name.first} ${name.last} </div>
-                                <div class="phone"><b>Phone:</b>${phone}</div>
-                                <div class="email"><b>Email:</b>${email}</div>
-                                <div class="address"><b>Address:</b>${location.state} ${location.city} ${location.street.name} ${location.street.number}</div>
-                                <div class="dob"><b>Day of Birthday:</b>${new Date(dob.date).toLocaleDateString()}</div>
-                                <div class="registered"><b>Registered:</b>${new Date(registered.date).toLocaleDateString()}</div>
-                                <div class="national"><b>National:</b>${nat}</div>
+                                <div class="gender"><b>Gender:</b> <code> ${gender}</code></div>
+                                <div class="full__name"><b>Full name:</b> <code>${name.first} ${name.last}</code> </div>
+                                <div class="phone"><b>Phone:</b> <code>${phone}</code></div>
+                                <div class="email"><b>Email:</b> <code>${email}</code></div>
+                                <div class="address"><b>Address:</b> <code>${location.state} ${location.city} ${location.street.name} ${location.street.number}</code></div>
+                                <div class="dob"><b>Day of Birthday:</b> <code> ${new Date(dob.date).toLocaleDateString()}</code></div>
+                                <div class="registered"><b>Registered:</b> <code> ${new Date(registered.date).toLocaleDateString()}</code></div>
+                                <div class="national"><b>National:</b> <code> ${nat}</code></div>
                               </div>
                             </div>
                         </div>
@@ -122,6 +122,26 @@ function getUsers(usersCount) {
         })
 };
 
+
+function myFunction() {
+    let input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById('input');
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("accordion__main");
+    li = ul.getElementsByTagName('li');
+
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByClassName("full__name")[0]
+            && li[i].getElementsByClassName("phone")[0]
+            && li[i].getElementsByClassName("email")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
 
 
 
