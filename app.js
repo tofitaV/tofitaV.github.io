@@ -4,7 +4,6 @@ document.getElementById("button").onclick = () => {
 
 const loader = document.getElementById("loader");
 const button = document.getElementById("button");
-const sortButton = document.getElementById('sortButton');
 
 function getRandomCountOfUsers() {
     return Math.floor(Math.random() * 101) // генерируем от 0 до 1000
@@ -142,6 +141,7 @@ function myFunction() {
         }
     }
 }
+
 
 
 
