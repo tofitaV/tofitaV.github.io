@@ -28,7 +28,7 @@ function getUsers(usersCount) {
                 const content = ` 
                     <li class="users">
                     <div class="card">
-                    <div class="full__name"><b>Full name:</b> <code> ${name.title} ${name.first} ${name.last}</code> </div>
+                    <div class="full__name"><b>Full name:</b> <code> ${name.first} ${name.last}</code> </div>
                     <div class="image">
                         <img src="${img}" alt="">
                     </div>
@@ -162,7 +162,7 @@ function sortList() {
             ? 0
             : (a.innerHTML > b.innerHTML ? 1 : -1);
     });
-    
+
     for (i = 0; i < itemsArr.length; ++i) {
         list.appendChild(itemsArr[i]);
     }
