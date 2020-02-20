@@ -2,6 +2,7 @@ document.getElementById("button").onclick = () => {
     getUsers(getRandomCountOfUsers()) //при нажании на кнопку вызовется getUsers и передасться рам-ое кол-во пользователей
 }
 
+
 const loader = document.getElementById("loader");
 const button = document.getElementById("button");
 
@@ -25,23 +26,19 @@ function getUsers(usersCount) {
                 card.classList = 'card-body';
                 let img = picture.large; // создаём дальше разметку которая будет добавлятся в html файл при каждом проходе, так же будет сразу заполнятся нужными нам данными
                 const content = ` 
-                    <li>
+                    <li class="users">
                     <div class="card">
-                            <div id="collapse-${index}" class="collapse show" aria-labelledby="heading-${index}" data-parent="#accordion">
-                              <div class="card-body">
-                                <div class="image">
-                                <img src="${img}" alt="">
-                                </div>
-                                <div class="gender"><b>Gender:</b> <code> ${gender}</code></div>
-                                <div class="full__name"><b>Full name:</b> <code>${name.first} ${name.last}</code> </div>
-                                <div class="phone"><b>Phone:</b> <code>${phone}</code></div>
-                                <div class="email"><b>Email:</b> <code>${email}</code></div>
-                                <div class="address"><b>Address:</b> <code>${location.state} ${location.city} ${location.street.name} ${location.street.number}</code></div>
-                                <div class="dob"><b>Day of Birthday:</b> <code> ${new Date(dob.date).toLocaleDateString()}</code></div>
-                                <div class="registered"><b>Registered:</b> <code> ${new Date(registered.date).toLocaleDateString()}</code></div>
-                                <div class="national"><b>National:</b> <code> ${nat}</code></div>
-                              </div>
-                            </div>
+                    <div class="full__name"><b>Full name:</b> <code>${name.first} ${name.last}</code> </div>
+                    <div class="image">
+                        <img src="${img}" alt="">
+                    </div>
+                    <div class="filterDiv gender"><b>Gender:</b> <code> ${gender}</code></div>
+                    <div class="phone"><b>Phone:</b> <code>${phone}</code></div>
+                    <div class="email"><b>Email:</b> <code>${email}</code></div>
+                    <div class="address"><b>Address:</b> <code>${location.state} ${location.city} ${location.street.name} ${location.street.number}</code></div>
+                    <div class="dob"><b>Day of Birthday:</b> <code> ${new Date(dob.date).toLocaleDateString()}</code></div>
+                    <div class="registered"><b>Registered:</b> <code> ${new Date(registered.date).toLocaleDateString()}</code></div>
+                    <div class="national"><b>National:</b> <code> ${nat}</code></div>
                         </div>
                     </li>`;
                 container.innerHTML += content;
@@ -123,18 +120,24 @@ function getUsers(usersCount) {
 
 
 function myFunction() {
-    let input, filter, ul, li, a, i, txtValue;
+    let input, filter, ul, li, a, i, txtValue, emailValue, phoneValue, b, c;
     input = document.getElementById('input');
     filter = input.value.toUpperCase();
     ul = document.getElementById("accordion__main");
     li = ul.getElementsByTagName('li');
 
     for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByClassName("full__name")[0]
-            && li[i].getElementsByClassName("phone")[0]
-            && li[i].getElementsByClassName("email")[0];
+        a = li[i].getElementsByClassName("full__name")[0];
+        b = li[i].getElementsByClassName("email")[0];
+        c = li[i].getElementsByClassName("phone")[0];
         txtValue = a.textContent || a.innerText;
+        emailValue = b.textContent || b.innerText;
+        phoneValue = c.textContent || c.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else if (emailValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        }else if (phoneValue.indexOf(filter) > -1) {
             li[i].style.display = "";
         } else {
             li[i].style.display = "none";
@@ -143,6 +146,24 @@ function myFunction() {
 }
 
 
+function sortList() {
+    const list = document.getElementById('accordion__main');
 
+    const items = list.childNodes;
+    let itemsArr = [];
+    for (let i in items) {
+        if (items[i].nodeType == 1) {
+            itemsArr.push(items[i]);
+        }
+    }
 
+    itemsArr.sort(function (a, b) {
+        return a.innerHTML == b.innerHTML
+            ? 0
+            : (a.innerHTML > b.innerHTML ? 1 : -1);
+    });
 
+    for (i = 0; i < itemsArr.length; ++i) {
+        list.appendChild(itemsArr[i]);
+    }
+}
