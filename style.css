@@ -6,7 +6,16 @@
 
 html {
     box-sizing: border-box;
+    height: 100%;
 }
+
+body {
+    font-size: 16px;
+    overflow-x: hidden;
+    margin: 10px;
+    padding: 10px;
+}
+
 
 ul {
     display: grid;
@@ -34,3 +43,71 @@ ul > * {
 }
 
 
+.btn {
+    margin: 0 20px;
+    padding: 15px 34px;
+    overflow: hidden;
+    font-family: 'Montserrat Alternates', sans-serif;
+    color: white;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-width: 0;
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+    outline: none;
+    cursor: pointer;
+}
+
+.btn2 {
+    color: black;
+    background: linear-gradient(90deg, #a3ffb0, #dfe6e9);
+
+}
+
+.loader{
+    display: block;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size:50px;
+}
+
+body{
+    height: 100%;
+    background: #dfe6e9;
+}
+
+.btn:before,
+.btn:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    left: -110%;
+    top: 0;
+    opacity: 0.1;
+    background: black;
+    transform: skewX(25deg);
+    transition: .5s ease;
+}
+.btn:hover:before {
+    left: -10%;
+    transition: .3s ease;
+}
+.btn:hover:after {
+    left: -20%;
+}
+
+input[type=text] {
+    color: black;
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    background: linear-gradient(90deg, #a3ffb0, #dfe6e9);
+    border: none;
+}

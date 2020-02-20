@@ -1,22 +1,30 @@
 document.getElementById("button").onclick = () => {
     getUsers(getRandomCountOfUsers()) //при нажании на кнопку вызовется getUsers и передасться рам-ое кол-во пользователей
+
 }
 
 
 const loader = document.getElementById("loader");
 const button = document.getElementById("button");
 
+
 function getRandomCountOfUsers() {
     return Math.floor(Math.random() * 101) // генерируем от 0 до 1000
+
 }
 
 function getUsers(usersCount) {
+    button.setAttribute("hidden", "");
     loader.removeAttribute("hidden"); //при нажатии убираем атрибут что б появился прелоадер
     fetch(`https://randomuser.me/api/?results=${usersCount}`)
         .then(response => response.json())
         .then((json) => { // получаем ответ из API в виде JSON
             loader.setAttribute("hidden", "");
-            button.setAttribute("hidden", "");
+
+            document.getElementById("sort").hidden = false;
+            document.getElementById("input").hidden = false;
+
+
             let infoContainer = document.getElementById("info");
             const container = document.getElementById('accordion__main');
 
@@ -128,9 +136,9 @@ function myFunction() {
 
     //перебираем все элементы и скрываем тех кто не подходит запросу
     for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByClassName("full__name")[0];
-        b = li[i].getElementsByClassName("email")[0];
-        c = li[i].getElementsByClassName("phone")[0];
+        a = li[i].querySelector(".full__name");
+        b = li[i].querySelector(".email");
+        c = li[i].querySelector(".phone");
         txtValue = a.textContent || a.innerText;
         emailValue = b.textContent || b.innerText;
         phoneValue = c.textContent || c.innerText;
@@ -143,6 +151,14 @@ function myFunction() {
         } else {
             li[i].style.display = "none";
         }
+
+        /*if (txtValue.toUpperCase().indexOf(filter) > 1
+            && phoneValue.toUpperCase().indexOf(filter) > 1
+            && emailValue.toUpperCase().indexOf(filter) > 1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }*/
     }
 }
 
