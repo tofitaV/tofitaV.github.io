@@ -63,7 +63,19 @@ ul > * {
 .btn2 {
     color: black;
     background: linear-gradient(90deg, #a3ffb0, #dfe6e9);
+}
 
+.preload{
+
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.btn3{
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 650%);
 }
 
 .loader{
