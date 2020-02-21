@@ -142,23 +142,14 @@ function myFunction() {
         txtValue = a.textContent || a.innerText;
         emailValue = b.textContent || b.innerText;
         phoneValue = c.textContent || c.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
-        } else if (emailValue.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
-        }else if (phoneValue.indexOf(filter) > -1) {
+        
+        if (txtValue.toUpperCase().includes(filter)
+            || phoneValue.includes(filter)
+            || emailValue.toUpperCase().includes(filter) ) {
             li[i].style.display = "";
         } else {
             li[i].style.display = "none";
         }
-
-        /*if (txtValue.toUpperCase().indexOf(filter) > 1
-            && phoneValue.toUpperCase().indexOf(filter) > 1
-            && emailValue.toUpperCase().indexOf(filter) > 1) {
-            li[i].style.display = "";
-        } else {
-            li[i].style.display = "none";
-        }*/
     }
 }
 
